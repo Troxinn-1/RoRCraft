@@ -49,10 +49,14 @@ function Find-MinecraftLauncher {
     }
     return $null
 }
+function Find-MinecraftStartApp {
+    try { return Get-StartApps | Where-Object { $_.Name -eq 'Minecraft Launcher' } | Select-Object -First 1 } catch { return $null }
+}
 
 if(-not $GamePath) { $GamePath = Find-RoR2 }
 if(-not $MinecraftInstance) { $MinecraftInstance = Find-MinecraftInstance }
 if(-not $MinecraftLauncherPath) { $MinecraftLauncherPath = Find-MinecraftLauncher }
+$minecraftStartApp = Find-MinecraftStartApp
 if(-not $GamePath) { throw 'Risk of Rain 2 was not found. Pass -GamePath explicitly.' }
 if(-not $MinecraftInstance) { throw 'A Prism/MultiMC Minecraft instance was not found. Pass -MinecraftInstance explicitly.' }
 
@@ -79,13 +83,11 @@ $ror2 = Join-Path $GamePath 'Risk of Rain 2.exe'
 if($MinecraftLauncherPath) {
     Write-Host 'Starting the official Minecraft Launcher. Select the installed Fabric profile if it is not already selected.'
     Start-Process -FilePath $MinecraftLauncherPath
+} elseif($minecraftStartApp) {
+    Write-Host 'Starting Minecraft Launcher from the Windows Start menu registration.'
+    Start-Process -FilePath 'explorer.exe' -ArgumentList @('shell:AppsFolder\'+$minecraftStartApp.AppID)
 } else {
-    try {
-        Start-Process 'minecraft://'
-        Write-Host 'Started the registered Minecraft Launcher protocol.'
-    } catch {
-        Write-Host 'Minecraft Launcher was not found automatically; start your Fabric profile manually.'
-    }
+    Write-Host 'Minecraft Launcher was not found automatically; start your Fabric profile manually.'
 }
 Write-Host 'Starting Risk of Rain 2 through BepInEx.'
 Start-Process -FilePath $ror2 -WorkingDirectory $GamePath
