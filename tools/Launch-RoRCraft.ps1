@@ -2,6 +2,7 @@
 param(
     [string]$GamePath,
     [string]$MinecraftInstance,
+    [string]$MinecraftLauncherPath,
     [switch]$NoLaunch
 )
 
@@ -37,12 +38,25 @@ function Find-MinecraftInstance {
     return $null
 }
 
+function Find-MinecraftLauncher {
+    $candidates = @(
+        (Join-Path ${env:ProgramFiles(x86)} 'Minecraft Launcher\MinecraftLauncher.exe'),
+        (Join-Path ${env:ProgramFiles} 'Minecraft Launcher\MinecraftLauncher.exe'),
+        (Join-Path $env:LOCALAPPDATA 'Programs\Minecraft Launcher\MinecraftLauncher.exe')
+    ) | Where-Object { $_ }
+    foreach($candidate in $candidates) {
+        if(Test-Path -LiteralPath $candidate -PathType Leaf) { return (Resolve-Path $candidate).Path }
+    }
+    return $null
+}
+
 $package = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 if(-not (Test-Path -LiteralPath (Join-Path $package 'manifest.json'))) {
     throw 'This launcher must run beside a prepared RoRCraft package containing manifest.json, Runtime, and Minecraft. The public release does not bundle the visual module; build the local package first.'
 }
 if(-not $GamePath) { $GamePath = Find-RoR2 }
 if(-not $MinecraftInstance) { $MinecraftInstance = Find-MinecraftInstance }
+if(-not $MinecraftLauncherPath) { $MinecraftLauncherPath = Find-MinecraftLauncher }
 if(-not $GamePath) { throw 'Risk of Rain 2 was not found. Pass -GamePath explicitly.' }
 if(-not $MinecraftInstance) { throw 'A Prism/MultiMC Minecraft instance was not found. Pass -MinecraftInstance explicitly.' }
 
@@ -54,5 +68,11 @@ $mcRoot = if(Test-Path (Join-Path $MinecraftInstance '.minecraft')) { Join-Path 
 $jar = Join-Path $mcRoot 'mods\skycraft-0.1.0.jar'
 if(Test-Path $jar) { Write-Host "Minecraft bridge installed: $jar" }
 $ror2 = Join-Path $GamePath 'Risk of Rain 2.exe'
-Write-Host 'Starting Risk of Rain 2. Start the matching Minecraft instance from Prism Launcher if it is not already running.'
+if($MinecraftLauncherPath) {
+    Write-Host 'Starting the official Minecraft Launcher. Select the installed Fabric profile if it is not already selected.'
+    Start-Process -FilePath $MinecraftLauncherPath
+} else {
+    Write-Host 'Minecraft Launcher was not found automatically; start your Fabric profile manually.'
+}
+Write-Host 'Starting Risk of Rain 2 through BepInEx.'
 Start-Process -FilePath $ror2 -WorkingDirectory $GamePath

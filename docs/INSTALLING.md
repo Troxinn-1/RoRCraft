@@ -33,8 +33,10 @@ Set-ExecutionPolicy -Scope Process Bypass
 .\tools\Launch-RoRCraft.ps1
 ```
 
-If autodetection does not find an installation, pass `-GamePath` and
-`-MinecraftInstance` explicitly. The launcher must be run beside a prepared package
+If autodetection does not find an installation, pass `-GamePath`,
+`-MinecraftInstance`, and optionally `-MinecraftLauncherPath` explicitly. The launcher
+supports both Prism/MultiMC instances and the standard `%APPDATA%\\.minecraft`
+directory used by the official launcher. The launcher must be run beside a prepared package
 with `manifest.json`, `Runtime/`, and `Minecraft/`; the public helper ZIP alone is
 not a complete binary distribution. Minecraft still has to be started from its own
 launcher because the public package cannot redistribute the game or account files.
