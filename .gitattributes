@@ -1,0 +1,15 @@
+* text=auto
+*.md text eol=lf
+*.java text eol=lf
+*.cs text eol=lf
+*.shader text eol=lf
+*.gradle text eol=lf
+*.json text eol=lf
+*.py text eol=lf
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+gradlew text eol=lf
+*.jar binary
+# Unity serializes empty YAML values with trailing spaces.
+*.asset -whitespace
+*.meta -whitespace
