@@ -24,3 +24,15 @@ Before a normal launch, close both games, run the installer, then launch RoR2 wi
 BepInEx and the matching Prism instance. The first public package is not yet a
 one-click installer because the preserved RoR2 host binary and game-specific assets
 cannot legally or reproducibly be bundled here.
+
+For a local prepared package, `tools/Launch-RoRCraft.ps1` can find common Steam and
+Prism Launcher locations automatically, install the package, and start RoR2:
+
+```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+.\tools\Launch-RoRCraft.ps1
+```
+
+If autodetection does not find an installation, pass `-GamePath` and
+`-MinecraftInstance` explicitly. Minecraft still has to be started from its own
+launcher because the public package cannot redistribute the game or account files.
