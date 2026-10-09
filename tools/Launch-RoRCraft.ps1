@@ -50,15 +50,23 @@ function Find-MinecraftLauncher {
     return $null
 }
 
-$package = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
-if(-not (Test-Path -LiteralPath (Join-Path $package 'manifest.json'))) {
-    throw 'This launcher must run beside a prepared RoRCraft package containing manifest.json, Runtime, and Minecraft. The public release does not bundle the visual module; build the local package first.'
-}
 if(-not $GamePath) { $GamePath = Find-RoR2 }
 if(-not $MinecraftInstance) { $MinecraftInstance = Find-MinecraftInstance }
 if(-not $MinecraftLauncherPath) { $MinecraftLauncherPath = Find-MinecraftLauncher }
 if(-not $GamePath) { throw 'Risk of Rain 2 was not found. Pass -GamePath explicitly.' }
 if(-not $MinecraftInstance) { throw 'A Prism/MultiMC Minecraft instance was not found. Pass -MinecraftInstance explicitly.' }
+
+if(!(Test-Path -LiteralPath (Join-Path $GamePath 'BepInEx') -PathType Container)) {
+    $dependencyInstaller = Join-Path $PSScriptRoot 'Install-RoRCraftDependencies.ps1'
+    if(!(Test-Path -LiteralPath $dependencyInstaller)) { throw 'BepInEx is missing and the dependency installer is unavailable.' }
+    & $dependencyInstaller -GamePath $GamePath -MinecraftRoot $MinecraftInstance
+    if($LASTEXITCODE -ne 0) { throw 'Dependency installation failed.' }
+}
+
+$package = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
+if(-not (Test-Path -LiteralPath (Join-Path $package 'manifest.json'))) {
+    throw 'This launcher must run beside a prepared RoRCraft package containing manifest.json, Runtime, and Minecraft. The public release does not bundle the visual module; build the local package first.'
+}
 
 $installer = Join-Path $PSScriptRoot 'Install-RoRCraft.ps1'
 & $installer -PackagePath $package -GamePath $GamePath -MinecraftInstance $MinecraftInstance
