@@ -34,5 +34,7 @@ Set-ExecutionPolicy -Scope Process Bypass
 ```
 
 If autodetection does not find an installation, pass `-GamePath` and
-`-MinecraftInstance` explicitly. Minecraft still has to be started from its own
+`-MinecraftInstance` explicitly. The launcher must be run beside a prepared package
+with `manifest.json`, `Runtime/`, and `Minecraft/`; the public helper ZIP alone is
+not a complete binary distribution. Minecraft still has to be started from its own
 launcher because the public package cannot redistribute the game or account files.

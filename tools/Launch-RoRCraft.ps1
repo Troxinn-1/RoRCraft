@@ -38,6 +38,9 @@ function Find-MinecraftInstance {
 }
 
 $package = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
+if(-not (Test-Path -LiteralPath (Join-Path $package 'manifest.json'))) {
+    throw 'This launcher must run beside a prepared RoRCraft package containing manifest.json, Runtime, and Minecraft. The public release does not bundle the visual module; build the local package first.'
+}
 if(-not $GamePath) { $GamePath = Find-RoR2 }
 if(-not $MinecraftInstance) { $MinecraftInstance = Find-MinecraftInstance }
 if(-not $GamePath) { throw 'Risk of Rain 2 was not found. Pass -GamePath explicitly.' }
