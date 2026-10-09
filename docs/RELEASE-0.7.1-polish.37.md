@@ -26,6 +26,16 @@ Download the source ZIP from this release page and follow
 The installer requires your own local installations of RoR2, BepInEx, Minecraft
 Java, and Prism/Fabric. Run `tools/Verify-RoRCraftPackage.ps1` before installation.
 
+### Release assets
+
+- `RoRCraft-Minecraft-Bridge.jar` — Fabric bridge mod.
+- `RoRCraft-Movement.dll` — native movement module.
+- `Install-RoRCraft.ps1` and `Verify-RoRCraftPackage.ps1` — local setup and hash checks.
+- `RoRCraft-v0.7.1-polish.37-source.zip` — complete public source snapshot.
+
+The visual module is built locally because it embeds assets from the player's own
+Minecraft installation. It is not uploaded to the public release.
+
 This release does not include game DLLs/JARs, Minecraft textures, music, accounts,
 or worlds. These files remain with the player for licensing reasons and are prepared
 locally during the build.
