@@ -40,3 +40,5 @@ directory used by the official launcher. The launcher must be run beside a prepa
 with `manifest.json`, `Runtime/`, and `Minecraft/`; the public helper ZIP alone is
 not a complete binary distribution. Minecraft still has to be started from its own
 launcher because the public package cannot redistribute the game or account files.
+
+Developers can generate the prepared package from a local checkout with `tools/Build-LocalRoRCraftPackage.ps1`. It requires an activated Unity Editor and the player's local RoR2 installation; the visual module is built locally so game assets stay on the player's machine.
