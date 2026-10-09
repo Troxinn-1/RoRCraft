@@ -52,6 +52,10 @@ The validated local stack uses RoR2 1.5.0#1210, Minecraft Java 26.3, Fabric Load
 0.19.5, Java 25 and a Unity 2021.3 shader build. Start with
 [build prerequisites](docs/BUILDING.md) and [current state](docs/CURRENT_STATE.md).
 
+For a locally built package, use the hash-checking installer described in
+[INSTALLING.md](docs/INSTALLING.md). It creates a backup before copying modules
+and never bundles either game's proprietary files.
+
 The .37 local regression run passed 22 targeted checks plus 42 Java tests. It
 covered skin export, inventory rendering, mining completion and basic native
 damage/armor interactions. These results are not a claim that all survivors,
