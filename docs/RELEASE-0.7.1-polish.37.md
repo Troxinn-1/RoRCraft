@@ -1,36 +1,36 @@
 # RoRCraft 0.7.1-polish.37
 
-První veřejný development release RoRCraftu — Minecraft × Risk of Rain 2.
+The first public development release of RoRCraft — Minecraft × Risk of Rain 2.
 
-## Co je v této verzi
+## What's included
 
-- Minecraft skin je vidět v lobby, inventáři i ve F5 pohledu.
-- Opravený inventář po stisknutí E.
-- Viditelné praskliny při těžení bloků a dokončení rozbití vanilla krumpáčem.
-- Přímé zásahy RoR2 nepřátel mají základní melee redukci a respektují Minecraft
-  armor/toughness.
-- Štít používá správnější Minecraft měřítko opotřebení.
-- Minecraft inventory, stavění, crafting, mobové a první propojené RoR2 item procy.
-- Veřejný zdrojový build, shader projekt, testy a lokální instalátor.
+- The Minecraft skin is visible in the lobby, inventory, and F5 views.
+- Fixed the inventory character preview after pressing E.
+- Visible block-breaking cracks and completed vanilla pickaxe mining.
+- Direct RoR2 enemy hits use a melee reduction and respect Minecraft armor/toughness.
+- Shield durability uses a more appropriate Minecraft-scale conversion.
+- Minecraft inventory, building, crafting, mobs, and the first connected RoR2 item procs.
+- Public source, shader project, tests, and a local installer.
 
-## Ověření
+## Validation
 
-- 22 cílených background kontrol prošlo s exit code 0.
-- 42 Fabric/JUnit testů prošlo.
-- Ověřený build zahrnuje F5 vpředu i vzadu, inventory skin a mining cracks.
-- Ověřený běh nepřevzal focus ani vstup uživatele.
+- 22 targeted background checks passed with exit code 0.
+- 42 Fabric/JUnit tests passed.
+- The validated build covers front and back F5 views, the inventory skin, and mining cracks.
+- The background run did not take focus or user input.
 
-## Instalace
+## Installation
 
-Stáhni si zdrojový ZIP z této release stránky a postupuj podle
+Download the source ZIP from this release page and follow
 [docs/INSTALLING.md](https://github.com/Troxinn-1/RoRCraft/blob/main/docs/INSTALLING.md).
-Instalátor vyžaduje vlastní lokální instalaci RoR2, BepInEx, Minecraft Java a
-Prism/Fabric. Použij `tools/Verify-RoRCraftPackage.ps1` před instalací.
+The installer requires your own local installations of RoR2, BepInEx, Minecraft
+Java, and Prism/Fabric. Run `tools/Verify-RoRCraftPackage.ps1` before installation.
 
-Tento release neobsahuje herní DLL/JAR, Minecraft textury, hudbu, účty ani světy.
-Tyto soubory musí zůstat u hráče kvůli licencím a jsou připravené lokálně při buildu.
+This release does not include game DLLs/JARs, Minecraft textures, music, accounts,
+or worlds. These files remain with the player for licensing reasons and are prepared
+locally during the build.
 
-## Stav projektu
+## Project status
 
-Je to vývojová verze pro singleplayer. Dlouhé runy, kompletní balance, multiplayer,
-Wither boss, summon pes a externí shader packy jsou další práce.
+This is a singleplayer development release. Long-run balance, multiplayer, a Wither
+boss, a dog summon, and external shader packs remain future work.
