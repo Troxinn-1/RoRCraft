@@ -17,6 +17,8 @@ if($GamePath) {
     if(!(Test-Path -LiteralPath $managed -PathType Container)) { throw "RoR2 Managed directory not found: $managed" }
 }
 if($MinecraftRoot -and !(Test-Path -LiteralPath $MinecraftRoot -PathType Container)) { throw "Minecraft directory not found: $MinecraftRoot" }
+if($MinecraftRoot) { & (Join-Path $PSScriptRoot 'Prepare-LocalMinecraftAssets.ps1') -MinecraftRoot $MinecraftRoot }
+if($MinecraftRoot) { & python (Join-Path $PSScriptRoot 'Prepare-LocalMinecraftAudio.py'); if($LASTEXITCODE -ne 0){throw 'Local Minecraft audio preparation failed.'} }
 
 $shader = Join-Path $polish 'shader-build\rorcraft-block-shaders'
 if(!$SkipShaderBuild) { & (Join-Path $polish 'Build-BlockShader.ps1') -UnityEditor $UnityEditor }
