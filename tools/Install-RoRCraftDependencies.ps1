@@ -14,6 +14,16 @@ Need (Join-Path $GamePath 'Risk of Rain 2.exe') 'Risk of Rain 2 executable'
 New-Item -ItemType Directory -Path $MinecraftRoot -Force | Out-Null
 $mcJava = Get-ChildItem (Join-Path $MinecraftRoot 'runtime') -Recurse -Filter 'java.exe' -File -ErrorAction SilentlyContinue | Select-Object -First 1
 if($mcJava) { $Java = $mcJava.FullName }
+if($Java -eq 'java.exe' -and !(Get-Command $Java -ErrorAction SilentlyContinue)) {
+    $javaRoots = @(
+        (Join-Path $env:LOCALAPPDATA 'Packages\Microsoft.4297127D64EC6_8wekyb3d8bbwe\LocalCache\Roaming\.minecraft\runtime'),
+        (Join-Path $env:APPDATA '.minecraft\runtime'),
+        (Join-Path ${env:ProgramFiles(x86)} 'Minecraft Launcher\runtime'),
+        (Join-Path ${env:ProgramFiles} 'Minecraft Launcher\runtime')
+    ) | Where-Object { $_ -and (Test-Path $_) }
+    $foundJava = $javaRoots | ForEach-Object { Get-ChildItem $_ -Recurse -Filter 'java.exe' -File -ErrorAction SilentlyContinue } | Select-Object -First 1
+    if($foundJava) { $Java = $foundJava.FullName }
+}
 if($Java -eq 'java.exe' -and !(Get-Command $Java -ErrorAction SilentlyContinue)) { throw 'Java was not found. Install Java or pass -Java with the Minecraft runtime java.exe path.' }
 
 $temp = Join-Path ([IO.Path]::GetTempPath()) ('rorcraft-deps-' + [guid]::NewGuid().ToString('N'))
