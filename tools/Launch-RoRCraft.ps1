@@ -72,7 +72,7 @@ $installer = Join-Path $PSScriptRoot 'Install-RoRCraft.ps1'
 & $installer -PackagePath $package -GamePath $GamePath -MinecraftInstance $MinecraftInstance
 if($NoLaunch) { exit 0 }
 
-$mcRoot = if(Test-Path (Join-Path $MinecraftInstance '.minecraft')) { Join-Path $MinecraftInstance '.minecraft' } else { $MinecraftInstance }
+$mcRoot = if((Split-Path $MinecraftInstance -Leaf) -eq '.minecraft') { $MinecraftInstance } elseif(Test-Path (Join-Path $MinecraftInstance '.minecraft')) { Join-Path $MinecraftInstance '.minecraft' } else { $MinecraftInstance }
 $jar = Join-Path $mcRoot 'mods\skycraft-0.1.0.jar'
 if(Test-Path $jar) { Write-Host "Minecraft bridge installed: $jar" }
 $ror2 = Join-Path $GamePath 'Risk of Rain 2.exe'
