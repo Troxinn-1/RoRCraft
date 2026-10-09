@@ -80,7 +80,12 @@ if($MinecraftLauncherPath) {
     Write-Host 'Starting the official Minecraft Launcher. Select the installed Fabric profile if it is not already selected.'
     Start-Process -FilePath $MinecraftLauncherPath
 } else {
-    Write-Host 'Minecraft Launcher was not found automatically; start your Fabric profile manually.'
+    try {
+        Start-Process 'minecraft://'
+        Write-Host 'Started the registered Minecraft Launcher protocol.'
+    } catch {
+        Write-Host 'Minecraft Launcher was not found automatically; start your Fabric profile manually.'
+    }
 }
 Write-Host 'Starting Risk of Rain 2 through BepInEx.'
 Start-Process -FilePath $ror2 -WorkingDirectory $GamePath
