@@ -37,7 +37,8 @@ foreach($entry in $manifest.files) {
 $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
 $backup = Join-Path $PackagePath "backups\before-install-$stamp"
 $nativePlugins = Join-Path $GamePath 'BepInEx\plugins\RoRCraft'
-$mods = Join-Path $MinecraftInstance '.minecraft\mods'
+$minecraftRoot = if((Split-Path $MinecraftInstance -Leaf) -eq '.minecraft') { $MinecraftInstance } elseif(Test-Path (Join-Path $MinecraftInstance '.minecraft')) { Join-Path $MinecraftInstance '.minecraft' } else { $MinecraftInstance }
+$mods = Join-Path $minecraftRoot 'mods'
 $mcJar = Join-Path $PackagePath 'Minecraft\RoRCraft.jar'
 $runtime = Join-Path $PackagePath 'Runtime'
 
