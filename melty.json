@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "mode": "installed",
+  "games": [
+    { "slug": "risk-of-rain-2", "role": "primary", "version": ">=1.5.0" },
+    { "slug": "minecraft-java", "role": "companion", "version": "26.3" }
+  ],
+  "components": [
+    { "id": "main", "fileName": "RoRCraft-Melty-*.zip", "label": "RoRCraft", "kind": "main", "required": true }
+  ],
+  "requirements": [
+    { "kind": "loader", "id": "bepinex-5" }
+  ],
+  "mappings": [
+    { "component": "main", "from": "RoRCraft/Runtime/", "to": "{game}/BepInEx/plugins/RoRCraft" },
+    { "component": "main", "from": "RoRCraft/Prism/", "to": "{managed}/RoRCraft/Prism" }
+  ],
+  "launch": { "kind": "game" },
+  "setup": {
+    "label": "Minecraft",
+    "launch": {
+      "kind": "exe",
+      "path": "{managed}/RoRCraft/Prism/prismlauncher.exe",
+      "args": ["-l", "RoRCraft"]
+    },
+    "done": {
+      "file": "{managed}/RoRCraft/Prism/logs/PrismLauncher-0.log",
+      "contains": "Loading Minecraft"
+    },
+    "stopWhenDone": false
+  },
+  "runtimeData": ["{managed}/RoRCraft/Prism/logs"],
+  "notes": {
+    "firstLaunch": "Sign in to the bundled portable Prism Launcher once. It downloads Minecraft Java and starts the RoRCraft Fabric instance."
+  }
+}
