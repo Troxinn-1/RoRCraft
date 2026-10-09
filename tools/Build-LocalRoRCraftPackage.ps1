@@ -18,7 +18,10 @@ if($GamePath) {
 }
 if($MinecraftRoot -and !(Test-Path -LiteralPath $MinecraftRoot -PathType Container)) { throw "Minecraft directory not found: $MinecraftRoot" }
 if($MinecraftRoot) { & (Join-Path $PSScriptRoot 'Prepare-LocalMinecraftAssets.ps1') -MinecraftRoot $MinecraftRoot }
-if($MinecraftRoot) { & python (Join-Path $PSScriptRoot 'Prepare-LocalMinecraftAudio.py'); if($LASTEXITCODE -ne 0){throw 'Local Minecraft audio preparation failed.'} }
+if($MinecraftRoot -and (!(Test-Path (Join-Path $polish 'ui-assets\click.wav')) -or !(Test-Path (Join-Path $polish 'ui-assets\pigstep-dance.wav')))) {
+    & python (Join-Path $PSScriptRoot 'Prepare-LocalMinecraftAudio.py')
+    if($LASTEXITCODE -ne 0){throw 'Local Minecraft audio preparation failed; install Python with soundfile or provide validated WAV assets.'}
+}
 
 $shader = Join-Path $polish 'shader-build\rorcraft-block-shaders'
 if(!$SkipShaderBuild) { & (Join-Path $polish 'Build-BlockShader.ps1') -UnityEditor $UnityEditor }
